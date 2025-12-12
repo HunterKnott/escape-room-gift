@@ -14,12 +14,14 @@ import "./App.css";
 
 // entry point for application
 function App() {
-    const storedJwt = localStorage.getItem('token');
-    const [jwt, setJwt] = useState(storedJwt || null);
+    // const storedJwt = localStorage.getItem('token');
+    // const [jwt, setJwt] = useState(storedJwt || null);
     const [formObject, setFormObject] = useState({})
-    const [user, setUser] = useState()
-    const [puzzles, setPuzzles] = useState()
-    const puzzleSeed = [
+    // const [user, setUser] = useState()
+    const [user, setUser] = useState(null)
+    // const [puzzles, setPuzzles] = useState()
+    // const puzzleSeed = [
+    const [puzzles, setPuzzles] = useState([
       {
         title: "Safe",
         description: "Enter a 4 digit code to crack the safe and win the game.",
@@ -38,19 +40,19 @@ function App() {
         winCondition: "solved puzzle",
         isSolved: false
       }
-    ];
+    ]);
 
 
-    useEffect(() => {
-        jwt && API.validateUser(jwt)
-        .then(res => {
-          setUser({
-            username: res.data.username, 
-            id: res.data._id,
-          })
-          setPuzzles(res.data.puzzles)
-        })
-    }, [jwt])
+    // useEffect(() => {
+    //     jwt && API.validateUser(jwt)
+    //     .then(res => {
+    //       setUser({
+    //         username: res.data.username, 
+    //         id: res.data._id,
+    //       })
+    //       setPuzzles(res.data.puzzles)
+    //     })
+    // }, [jwt])
 
     // Handles updating component state when the user types into the input field
     function handleInputChange(event) {
@@ -60,52 +62,29 @@ function App() {
 
     function handleSolvedPuzzle(puzzleName) {
       const puzzleToUpdate = [...puzzles]
-      puzzleToUpdate[puzzleName].isSolved = true
-      setPuzzles(puzzleToUpdate)
+      const puzzleIndex = puzzleToUpdate.findIndex(p => p.title === puzzleName);
+      if (puzzleIndex !== -1) {
+        puzzleToUpdate[puzzleIndex].isSolved = true
+        setPuzzles(puzzleToUpdate)
+      }
     }
 
-    // When the form is submitted, use the API.saveUser method to save the User data
-    function handleSignUpSubmit(event) {
-        event.preventDefault();
-        API.createUser({
-            firstName: formObject.firstName,
-            lastName: formObject.lastName,
-            username: formObject.username,
-            password: formObject.password,
-            puzzles: puzzleSeed
-        })
-        .then(() => {
-          API.checkUser({
-            username: formObject.username,
-            password: formObject.password
-          })
-          .then(res => {
-              setJwt(res.data.token)
-          })
-          .catch(err => console.log(err));
-          })
-        .catch(err => console.log(err));
-    };
-
-    function handleLogInSubmit(event) {
-        event.preventDefault();
-        API.checkUser({
-            username: formObject.username,
-            password: formObject.password
-        })
-        .then(res => {
-            setJwt(res.data.token)
-        })
-        .catch(err => console.log(err));
-    };
-
-    function logout(event) {
+    // Replace signup/login with simple email submit
+    function handleEmailSubmit(event) {
       event.preventDefault();
-      API.logout({
-      })
-      .then(setUser(''))
-      .catch(err => console.log(err));
-    }
+      if (formObject.email) {
+        setUser({
+          email: formObject.email,
+          id: 'local-user'
+        });
+      }
+  };
+
+  function logout(event) {
+    event.preventDefault();
+    setUser(null);
+    localStorage.removeItem('token');
+  }
 
 
   return (
@@ -115,8 +94,7 @@ function App() {
           <Route exact path="/" render={(props) => user ? (<StartPage {...props} user={user} puzzle={puzzles} />) : (
             <Welcome {...props} user={user} 
             handleInputChange={handleInputChange} 
-            handleLogInSubmit={handleLogInSubmit} 
-            handleSignUpSubmit={handleSignUpSubmit}
+            handleEmailSubmit={handleEmailSubmit}
             />)} 
           />
           <Route exact path="/startPage" render={(props) => (

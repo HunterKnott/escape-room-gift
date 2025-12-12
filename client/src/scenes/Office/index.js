@@ -6,7 +6,7 @@ function Office(props) {
   function alertLocked(event) {
     event.preventDefault();
     const Swal = require("sweetalert2");
-    Swal.fire("Uh oh! The desk is locked! Try to find the key.");
+    Swal.fire("The desk is locked. Try to find the key.");
   }
 
   return (

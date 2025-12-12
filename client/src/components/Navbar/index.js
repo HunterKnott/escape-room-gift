@@ -47,7 +47,7 @@ function Navbar(props) {
             )}/>
           </li>
           <li className="nav-item">
-            <Link
+            {/* <Link
               to="/scoreBoard"
               exact="true"
               className={
@@ -57,7 +57,7 @@ function Navbar(props) {
               }
             >
               Leader Board
-            </Link>
+            </Link> */}
           </li>
           <li className="nav-item logout">
           <Route render={() => (

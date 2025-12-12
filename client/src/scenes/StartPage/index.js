@@ -39,7 +39,7 @@ function StartPage (props) {
         <Col size="md-8">
             <div className="info-card">
               <div className="card-body">
-                <h5 className="card-title">You've been captured!</h5>
+                <h5 className="card-title">You've been captured</h5>
                 <p className="card-text">
                   The killer has knocked you unconscious while you're away from your friends. He drags you through the woods..
                 </p>
@@ -50,7 +50,7 @@ function StartPage (props) {
                 </p>
                 <br></br>
                 <p className="card-text">
-                  You are left all alone, and you have untied yourself. Your objective is to look around the office. It's up to you to get out, get your friends, and...
+                  You are left all alone, and you untied yourself. Your objective is to look around the office. It's up to you to get out, get your friends, and...
                 </p>
                 <br></br>
                 <p className="card-text">

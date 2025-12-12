@@ -2,15 +2,20 @@ import React, {useState} from "react";
 import { Route, Link } from "react-router-dom";
 import Row from "../../components/Row";
 import API from "../../utils/API";
+import emailjs from '@emailjs/browser';
 import "./style.css";
 
 function Safe(props) {
   const safePuzzle = props.puzzle[0];
   const userId = props.user.id;
   const puzzleTitle = safePuzzle.title;
+  const userEmail = props.user.email; // Get the user's email
   const Swal = require("sweetalert2");
   const [code, setCode] = useState([])
 
+  // Initialize EmailJS (you'll need to replace 'YOUR_PUBLIC_KEY' with your actual public key)
+  // You can get this from EmailJS dashboard
+  // For now, we'll initialize it in the sendEmail function
 
   function pickNumber(event) {
     event.preventDefault();
@@ -32,15 +37,53 @@ function Safe(props) {
     setCode([])
   };
 
-  function safeCracked() {
-    API.solved(userId, { puzzleTitle })
-      .then(() => {
-        Swal.fire(
-          "Congrats! You've managed to escape with the keys found in the safe!"
-        );
-        props.handleSolvedPuzzle("0");
+  function sendEmail() {
+    // Replace 'YOUR_SERVICE_ID' with your actual EmailJS service ID
+    const serviceId = 'service_vd49itr';
+    // Replace 'YOUR_TEMPLATE_ID' with your actual EmailJS template ID
+    const templateId = 'template_9hoxzbs';
+    // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+    const publicKey = 'rl5GL9AWeBthjlURK';
+
+    // Initialize EmailJS with your public key
+    emailjs.init(publicKey);
+
+    // Prepare template parameters
+    const templateParams = {
+      to_email: userEmail,
+      // Add any other template parameters you need
+    };
+
+    // Send the email
+    emailjs.send(serviceId, templateId, templateParams)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        Swal.fire("Check your email");
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.error('Error sending email:', error);
+        Swal.fire("There was an error sending the email. Please try again.");
+      });
+  }
+
+  function safeCracked() {
+    props.handleSolvedPuzzle(safePuzzle.title);
+    
+    // Show popup with "Get Your Prize" button
+    Swal.fire({
+      title: "You escaped with the keys found in the safe!",
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: "Get Your Prize",
+      confirmButtonColor: "#ffc107",
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Send email when button is clicked
+        sendEmail();
+      }
+    });
   };
 
   return (
@@ -58,9 +101,9 @@ function Safe(props) {
           bottom: "1015px"
         }}
       >
-        Crack the safe with a 4 digit code!
+        Crack the safe with a 4 digit code.
       </div>
-      <div>
+      {/* <div>
         <Route
           render={() =>
             safePuzzle.isSolved ? (
@@ -72,7 +115,7 @@ function Safe(props) {
             )
           }
         />
-      </div>
+      </div> */}
       <div
         className="box"
         style={{
@@ -141,7 +184,7 @@ function Safe(props) {
               right: "-76px",
             }}
           >
-            Dad
+            Dad's Safe
           </div>
         </div>
       </div>

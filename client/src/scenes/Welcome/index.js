@@ -11,7 +11,7 @@ function Welcome (props) {
         <div className="background-login">
             <header className="welcome">
                 Welcome to the Escape Room!
-                <h2 className="login">{props.user ? props.user.username : "Log In or Sign Up"}</h2>
+                <h2 className="login">{props.user ? props.user.email : "Enter Your Email to Begin"}</h2>
             </header>
             <div className="container">
                 <Row>
@@ -25,43 +25,23 @@ function Welcome (props) {
                         <Card>
                             <form>
                                 <div className="form-group">
-                                    <div className="formTitle">Sign Up</div>
+                                    <div className="formTitle">Start Game</div>
                                     <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="firstName" type="text" className="form-control" placeholder="First Name" aria-label="First Name"/>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="lastName" type="text" className="form-control" placeholder="Last Name" aria-label="Last Name"/>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="username" type="text" className="form-control" placeholder="Username" aria-label="Username"/>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="password" type="password" className="form-control" placeholder="Password" aria-label="Password"/>
-                                    </div>
-                                    <button type="submit" onClick={props.handleSignUpSubmit} className="btn btn-warning">
-                                        Sign Up
-                                    </button>
-                                </div>
-                            </form>
-                        </Card>
-                    </Col>
-                    <Col size="lg-4">
-                        <Card>
-                            <form>
-                                <div className="form-group">
-                                    <div className="formTitle">Log In</div>
-                                    <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="username" type="text" className="form-control" placeholder="Username" aria-label="Username"/>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input onChange={props.handleInputChange} name="password" type="password" className="form-control" placeholder="Password" aria-label="Password"/>
+                                        <input 
+                                            onChange={props.handleInputChange} 
+                                            name="email" 
+                                            type="email" 
+                                            className="form-control" 
+                                            placeholder="Email" 
+                                            aria-label="Email"
+                                        />
                                     </div>
                                     <button
                                         type="submit"
-                                        onClick={props.handleLogInSubmit}
+                                        onClick={props.handleEmailSubmit}
                                         className="btn btn-warning"
                                     >
-                                        Log In
+                                        Start Escape Room
                                     </button>
                                 </div>
                             </form>

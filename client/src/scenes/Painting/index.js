@@ -102,12 +102,9 @@ class Painting extends Component {
                     // const userId = this.props.user.id;
                     const puzzleTitle = this.props.puzzle[2].title;
                         
-                    API.solved(this.props.user.id, {puzzleTitle})
-                    .then(() => {
-                        Swal.fire("The painting moved and a safe appeared")
-                        this.props.handleSolvedPuzzle('2')
-                    })
-                    .catch((err) => console.log(err));
+                    // Remove API call, just update local state
+                    Swal.fire("The painting moved and a safe appeared")
+                    this.props.handleSolvedPuzzle(puzzleTitle)
                     this.setState({
                         winCondition: true,
                     })
