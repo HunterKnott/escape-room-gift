@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import React, { useState, useEffect }from 'react';
-import API from "./utils/API";
+import React, { useState }from 'react';
+// import API from "./utils/API";
 import Welcome from './scenes/Welcome'
 import Office from './scenes/Office'
 import Bookshelf from './scenes/Bookshelf'

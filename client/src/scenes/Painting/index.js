@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import API from "../../utils/API";
+// import API from "../../utils/API";
 import originalImage from "./images/rasterFoxResize.png";
 import "./Puzzle.css";
 import { Link, Route } from "react-router-dom";

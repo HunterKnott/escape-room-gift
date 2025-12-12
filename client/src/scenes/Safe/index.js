@@ -1,14 +1,11 @@
 import React, {useState} from "react";
-import { Route, Link } from "react-router-dom";
+// import { Route, Link } from "react-router-dom";
 import Row from "../../components/Row";
-import API from "../../utils/API";
 import emailjs from '@emailjs/browser';
 import "./style.css";
 
 function Safe(props) {
   const safePuzzle = props.puzzle[0];
-  const userId = props.user.id;
-  const puzzleTitle = safePuzzle.title;
   const userEmail = props.user.email; // Get the user's email
   const Swal = require("sweetalert2");
   const [code, setCode] = useState([])
