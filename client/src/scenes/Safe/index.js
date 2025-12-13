@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-// import { Route, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Row from "../../components/Row";
-import emailjs from '@emailjs/browser';
+// import emailjs from '@emailjs/browser';
 import "./style.css";
 
 function Safe(props) {
@@ -34,33 +34,26 @@ function Safe(props) {
     setCode([])
   };
 
+  // function sendEmail() {
+  //   // Replace 'YOUR_SERVICE_ID' with your actual EmailJS service ID
+  //   const serviceId = 'service_vd49itr';
+  //   // Replace 'YOUR_TEMPLATE_ID' with your actual EmailJS template ID
+  //   const templateId = 'template_9hoxzbs';
+  //   // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+  //   const publicKey = 'rl5GL9AWeBthjlURK';
+
+  //   // Initialize EmailJS with your public key
+  //   emailjs.init(publicKey);
+
+  //   // Prepare template parameters
+  //   const templateParams = {
+  //     to_email: userEmail,
+  //     // Add any other template parameters you need
+  //   };
+
   function sendEmail() {
-    // Replace 'YOUR_SERVICE_ID' with your actual EmailJS service ID
-    const serviceId = 'service_vd49itr';
-    // Replace 'YOUR_TEMPLATE_ID' with your actual EmailJS template ID
-    const templateId = 'template_9hoxzbs';
-    // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-    const publicKey = 'rl5GL9AWeBthjlURK';
-
-    // Initialize EmailJS with your public key
-    emailjs.init(publicKey);
-
-    // Prepare template parameters
-    const templateParams = {
-      to_email: userEmail,
-      // Add any other template parameters you need
-    };
-
-    // Send the email
-    emailjs.send(serviceId, templateId, templateParams)
-      .then((response) => {
-        console.log('Email sent successfully!', response.status, response.text);
-        Swal.fire("Check your email");
-      })
-      .catch((error) => {
-        console.error('Error sending email:', error);
-        Swal.fire("There was an error sending the email. Please try again.");
-      });
+    // Just show the popup without sending email
+    Swal.fire("Check your email");
   }
 
   function safeCracked() {
